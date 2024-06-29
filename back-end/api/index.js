@@ -10,7 +10,7 @@ const app = express();
 const PORT = 7777;
 
 const corsOptions = {
-  origin: 'https://ticket-nfsf.vercel.app', // замените на ваш домен
+  origin: 'https://ticket-front-end.vercel.app', // замените на ваш домен
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };

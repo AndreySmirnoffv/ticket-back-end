@@ -14,7 +14,7 @@ const CreateUser = () => {
     setLoading(true);
     const data = await Object.fromEntries(new FormData(e.currentTarget));
     await axios
-      .post('https://ticket-uu8k.onrender.com/admin', data)
+      .post('https://ticket-back-end.vercel.app/admin', data)
       .then(function (response) {
         console.log(response);
       })
