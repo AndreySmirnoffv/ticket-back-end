@@ -18,13 +18,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-app.get("/test", async (req, res) => {
+app.get("/test", async (_, res) => {
   res.json({message: "hello"})
 })
 
 app.post('/admin', async (req, res) => {
-  const { email, password, gender, name } = req.body;
-  console.log(password);
   
   try {
     // const hashedPassword = await bcrypt.hash(password, 10);
@@ -33,7 +31,6 @@ app.post('/admin', async (req, res) => {
     });
     res.json({ message: "User saved successfully" });
   } catch (error) {
-    console.log("Error saving data:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
@@ -47,20 +44,17 @@ app.post('/login', async (req, res) => {
     });
     
     if (!user) {
-      console.log('User not found for email:', email);
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
     // const passwordMatch = await bcrypt.compare(password, user.password);
 
-    if (user.email && password) {
-      res.json({ message: 'Login successful', user });
-    } else {
-      console.log('Invalid password for email:', email);
+    if (!user.email || !password) {
       return res.status(401).json({ message: 'Invalid email or password' });
+    } else {
+      res.json({ message: 'Login successful', user });
     }
   } catch (error) {
-    console.error('Error logging in user:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
@@ -73,13 +67,12 @@ app.get('/profile', async (req, res) => {
       where: { email }
     });
     
-    if (user) {
-      res.json(user);
-    } else {
+    if (!user) {
       res.status(404).json({ message: "User not found" });
+    } else {
+      res.json(user);
     }
   } catch (error) {
-    console.error('Error fetching user:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
