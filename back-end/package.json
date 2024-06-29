@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "migrate": "prisma migrate deploy",
+    "migrate": "npx prisma migrate deploy",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build": "npx prisma generate && npm i",
+    "postinstall": "npx prisma generate"
   },
   "keywords": [],
   "author": "",
